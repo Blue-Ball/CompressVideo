@@ -19,21 +19,22 @@ videoResolusions = {'1080p': {'width': '1920', 'height': '1080', 'rate':'1.7M'},
                     '360p': {'width': '480', 'height': '360', 'rate':'0.25M'}}
 
 mypath = os.path.abspath(__file__)
-mydir = os.path.dirname(mypath)
+rootdir = os.path.dirname(mypath)
+inputdir = join(rootdir, 'input')
 
 print('-----Start-----')
 
-onlyfiles = [f for f in listdir(mydir) if isfile(join(mydir, f))]
+onlyfiles = [f for f in listdir(inputdir) if isfile(join(inputdir, f))]
 for file in onlyfiles:
     if mimetypes.guess_type(file)[0].startswith('video'):
-        dir = join(mydir, 'out\\' + file)
-        if not os.path.exists(dir):
-            os.makedirs(dir)
+        outdir = join(rootdir, 'out\\' + file)
+        if not os.path.exists(outdir):
+            os.makedirs(outdir)
         
-        inputFile = join(mydir, file)
+        inputFile = join(inputdir, file)
         print('\ninputFile:' + inputFile)
         for rs in videoResolusions:
-            outFile = join(dir, rs+".mp4")
+            outFile = join(outdir, rs+".mp4")
             compress_video(inputFile, outFile, videoResolusions[rs])
             print('Done:' + outFile)
 
