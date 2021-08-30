@@ -1,5 +1,7 @@
 # CompressVideo
 
+mp4 video (h.264) compress to it and create 4 versions of the video (1080p@1.7Mbps, 720p@1.1Mbps, 480p@0.5Mbps, 360p@0.25Mbps).
+
 ## INPUT
 * ### Prepare the video files into "input" directory.
 ```csharp
