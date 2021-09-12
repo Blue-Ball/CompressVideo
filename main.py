@@ -43,11 +43,12 @@ def Execute_Process(rate, infolder, outfolder, overlayFile):
 
             inputFile = join(inputdir, file)
             print('\ninputFile:' + inputFile)
-            (
-                ffmpeg.overlay(ffmpeg.input(inputFile), ffmpeg.input(overlayFile), **{'x':'(main_w-overlay_w)/2', 'y':'(main_h-overlay_h)/2'})
-                .output('temp.mp4').overwrite_output().run()
-            )
 
+            audio_stream = ffmpeg.input(inputFile).audio
+            video_stream = ffmpeg.overlay(ffmpeg.input(inputFile, **{'acodec':'mp3'}), ffmpeg.input(overlayFile), **{'x':'(main_w-overlay_w)/2', 'y':'(main_h-overlay_h)/2'})
+            # video_stream = ffmpeg.overlay(ffmpeg.input(inputFile, **{'acodec':'mp3'}), ffmpeg.input(overlayFile), **{'x':'0', 'y':'0'})
+            ffmpeg.output(audio_stream, video_stream, 'temp.mp4').overwrite_output().run()
+            
             if g_bStart == False:
                 break
             for rs in videoResolusions:
